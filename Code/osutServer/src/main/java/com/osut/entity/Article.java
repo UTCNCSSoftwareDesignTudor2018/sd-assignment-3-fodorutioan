@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Article {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "title")
@@ -18,7 +18,7 @@ public class Article {
     private String body;
 
     @ManyToOne
-    @Column(name = "author_id")
+    @JoinColumn(name = "author_id")
     private Writer author;
 
     public Long getId() {
@@ -50,6 +50,16 @@ public class Article {
     }
 
     public void setAuthor(Writer author) {
+        this.author = author;
+    }
+
+    public Article() {
+
+    }
+
+    public Article(String title, String body, Writer author) {
+        this.title = title;
+        this.body = body;
         this.author = author;
     }
 

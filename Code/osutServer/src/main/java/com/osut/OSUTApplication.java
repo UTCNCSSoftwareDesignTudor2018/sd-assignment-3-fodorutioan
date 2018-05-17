@@ -1,6 +1,15 @@
 package com.osut;
 
+import com.osut.entity.Article;
+import com.osut.entity.Writer;
 import com.osut.networking.Server;
+import com.osut.service.ArticleService;
+import com.osut.service.WriterService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.net.ServerSocket;
 
@@ -15,7 +24,9 @@ import java.net.ServerSocket;
      * dependent.  If you ran it from a console window with the "java"
      * interpreter, Ctrl+C generally will shut it down.
      */
-public class OSUTApplication {
+
+@SpringBootApplication
+public class OSUTApplication implements CommandLineRunner {
     /**
      * Application method to run the server runs in an infinite loop
      * listening on port 9898.  When a connection is requested, it
@@ -24,7 +35,15 @@ public class OSUTApplication {
      * client that connects just to show interesting logging
      * messages.  It is certainly not necessary to do this.
      */
+
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    private WriterService writerService;
+
     public static void main(String[] args) throws Exception {
+        SpringApplication.run(OSUTApplication.class, args);
         System.out.println("The OSUT server is running.");
         int clientNumber = 0;
         ServerSocket listener = new ServerSocket(9898);
@@ -35,6 +54,14 @@ public class OSUTApplication {
         } finally {
             listener.close();
         }
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        Writer ioan = new Writer("ioan","add","email","fodorutioan","pass");
+        writerService.save(ioan);
+        articleService.save(new Article("copac","body",ioan));
+        //System.out.println(articleService.getAllArticles());
     }
 }
 

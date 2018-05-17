@@ -26,6 +26,10 @@ public class Writer {
     @Column(name = "password")
     private String password;
 
+    public Writer() {
+
+    }
+
     public Writer(String name, String address, String email, String username, String password) {
         this.name = name;
         this.address = address;

@@ -16,5 +16,6 @@ public class ArticleService {
 
     public List<Article> getAllArticles() { return this.articleRepository.findAll(); }
     public List<Article> getArticlesByAuthor(Writer writer) { return this.articleRepository.findAllByAuthor(writer);}
+    public Article save(Article article) { return this.articleRepository.save(article); }
 
 }
